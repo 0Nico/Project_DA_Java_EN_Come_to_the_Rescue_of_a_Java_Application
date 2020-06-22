@@ -65,5 +65,24 @@ public class SymptomToolsBox {
 	}
 	
 	
+	public void writeSymptomsCountAlphabetically(String resultPath) throws IOException {
+		
+		List<String> allSymptoms = new ArrayList<String>(symptoms.keySet());
+		Collections.sort(allSymptoms);
+		
+		FileWriter writer = new FileWriter (resultPath);
+		allSymptoms.stream().forEach(symptom  ->{
+			try {
+				writer.write(symptom + " : " + symptoms.get(symptom)+ "\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+			
+		
+		writer.close();
+	}
+	
 
 }

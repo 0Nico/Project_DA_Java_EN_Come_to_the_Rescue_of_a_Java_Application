@@ -22,7 +22,7 @@ public class AnalyticsCounter {
 		
 		System.out.println("Please enter the name of the result file (will overwrite if file already exist).\n");
 		resultPath = input.next();
-		toolsbox.writeSymptomsCountOnFile(resultPath);
+		toolsbox.writeSymptomsCountAlphabetically(resultPath);
 		
 		input.close();
 		System.out.println("Thank you for using HemeBioTech Software. See you soon. \n");
