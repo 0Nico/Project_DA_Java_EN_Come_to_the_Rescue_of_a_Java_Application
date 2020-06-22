@@ -36,7 +36,6 @@ public class SymptomToolsBox {
 			if(symptoms.containsKey(line)) {
 				symptoms.replace(line, symptoms.get(line) + 1);
 				System.out.println("symptom from file: " + line);
-				
 			}
 			else {
 				symptoms.put(line, 1);
@@ -44,44 +43,47 @@ public class SymptomToolsBox {
 			
 			line = reader.readLine();	// get another symptom
 		}
-		
 		reader.close(); 
 	}
 	
 	public void writeSymptomsCountOnFile(String resultPath) throws IOException {
 		
-		FileWriter writer = new FileWriter (resultPath);
-		symptoms.forEach((symptom, frequency)  ->{
-			try {
-				writer.write(symptom + " : " + frequency + "\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-			
-		
-		writer.close();
+		if(symptoms == null) {
+			System.err.println("Error, no symptoms are loaded. Please only use this methods after reading symptoms file.");
+		} else {
+			FileWriter writer = new FileWriter (resultPath);
+			symptoms.forEach((symptom, frequency)  ->{
+				try {
+					writer.write(symptom + " : " + frequency + "\n");
+				} catch (IOException e) {
+					System.err.println("Error while writing in result File. Please retry with a correct extension file.");
+					e.printStackTrace();
+				}
+			});
+			writer.close();
+		}
 	}
 	
 	
 	public void writeSymptomsCountAlphabetically(String resultPath) throws IOException {
 		
-		List<String> allSymptoms = new ArrayList<String>(symptoms.keySet());
-		Collections.sort(allSymptoms);
-		
-		FileWriter writer = new FileWriter (resultPath);
-		allSymptoms.stream().forEach(symptom  ->{
-			try {
-				writer.write(symptom + " : " + symptoms.get(symptom)+ "\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+		if(symptoms == null) {
+			System.err.println("Error, no symptoms are loaded. Please only use this methods after reading symptoms file.");
+		} else {
+			List<String> allSymptoms = new ArrayList<String>(symptoms.keySet());
+			Collections.sort(allSymptoms);
 			
-		
-		writer.close();
+			FileWriter writer = new FileWriter (resultPath);
+			allSymptoms.stream().forEach(symptom  ->{
+				try {
+					writer.write(symptom + " : " + symptoms.get(symptom)+ "\n");
+				} catch (IOException e) {
+					System.err.println("Error while writing in result File. Please retry with a correct extension file.");
+					e.printStackTrace();
+				}
+			});	
+			writer.close();
+		}
 	}
 	
 
