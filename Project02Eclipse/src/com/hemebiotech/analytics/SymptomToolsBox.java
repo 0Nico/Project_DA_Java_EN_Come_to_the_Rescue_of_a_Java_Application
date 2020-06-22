@@ -11,20 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Simple brute force implementation
- *
+ * The essential object with all the methods needed by the main file. 
+ *@author 0Nico
+ *@version 1.4
  */
 public class SymptomToolsBox {
 
-	
+	/**
+	 * Key collection who contains the symptoms file counted data
+	 */
 	private Map<String, Integer> symptoms;	
-	
 	
 
 	/**
-	 * 
+	 * Reading method, come in first order to execute correctly the full software.
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
-	 * @throws IOException 
+	 * @throws IOException if the file path is incorrect
 	 */
 	public void readSymptomsDataFromFile (String filepath) throws IOException {
 		BufferedReader reader = new BufferedReader (new FileReader(filepath));
@@ -46,6 +48,13 @@ public class SymptomToolsBox {
 		reader.close(); 
 	}
 	
+	/**
+	 *  Second time method, to write in a result file the final analyze. 
+	 *  
+	 * @see readSymptomsDataFromFile needed before using this method.
+	 * @param resultPath a full or partial path to a create a the file with the software result
+	 * @throws IOException if the result path is incorrect
+	 */
 	public void writeSymptomsCountOnFile(String resultPath) throws IOException {
 		
 		if(symptoms == null) {
@@ -64,7 +73,13 @@ public class SymptomToolsBox {
 		}
 	}
 	
-	
+	/**
+	 *  Second time method, to write in a result file the final analyze with a alphabetical order. 
+	 *  
+	 * @see readSymptomsDataFromFile needed before using this method.
+	 * @param resultPath a full or partial path to a create a the file with the software result
+	 * @throws IOException if the result path is incorrect
+	 */
 	public void writeSymptomsCountAlphabetically(String resultPath) throws IOException {
 		
 		if(symptoms == null) {
