@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
+import com.hemebiotech.analytics.toolsbox.options.OrderingOption;
+
 public interface ISymptomToolsBox {
 
 	
@@ -17,12 +19,12 @@ public interface ISymptomToolsBox {
 	
 	
 	/**
-	 *  Write in a result file the final analyze with a alphabetical order. 
+	 *  Write in a result file the final analyze with specified order. 
 	 *  
-	 * @param resultPath a full or partial path to a create a the file with the software result and symptoms who contains the symptoms
-	 * @throws IOException if the result path is incorrect
+	 * @param resultPath a full or partial path to a create a the file with result, a map with counted symptoms, the ordering option
+	 * @throws IOException if the result path is incorrect & RuntimeException if the current line can't be written
 	 */
-	public void writeSymptomsCountAlphabetically(String resultPath, Map<String, Integer> symptoms) throws Exception ;
+	public void writeSymptomsCount(String resultPath, Map<String, Integer> symptoms, OrderingOption option) throws Exception ;
 		
 	
 }
