@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +28,13 @@ public class SymptomToolsBox implements ISymptomToolsBox {
 	/**
 	 * Read line by line to collect and count file's symptoms
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
-	 * @throws FileNotFoundException if the file path is incorrect & RuntimeException if the lines aren't readable
 	 * @return A map who contains symptoms extract and count from the file
+	 * @throws ReadFileException 
+	 * @throws ReadLinesException 
+	 * @throws IOException 
 	 */
 	@Override
-	public Map<String, Integer> readSymptomsDataFromFile (String filepath) throws Exception {
+	public Map<String, Integer> readSymptomsDataFromFile (String filepath) throws  ReadFileException, ReadLinesException, IOException {
 		try (BufferedReader reader = new BufferedReader (new FileReader(filepath))){
 				
 			Map<String, Integer> symptoms = new HashMap<>();	
@@ -60,11 +61,15 @@ public class SymptomToolsBox implements ISymptomToolsBox {
 	/**
 	 *  Write in a result file the final analyze with specified order. 
 	 *  
-	 * @param resultPath a full or partial path to a create a the file with result, a map with counted symptoms, the ordering option
+	 * @param resultPath  a full or partial path to a create a the file with result,  the ordering option
+	 * @param symptoms  a map with counted symptoms
+	 * @param option  the option to configure the symptoms sort 
+	 * @throws WriteLineException 
+	 * @throws CreateFileException 
 	 * @throws IOException if the result path is incorrect & RuntimeException if the current line can't be written
 	 */
 	@Override
-	public void writeSymptomsCount(String resultPath, Map<String, Integer> symptoms, OrderingOption option) throws Exception {
+	public void writeSymptomsCount(String resultPath, Map<String, Integer> symptoms, OrderingOption option) throws WriteLineException, CreateFileException {
 		try (FileWriter writer = new FileWriter (resultPath)){
 		
 			List<String> allSymptoms = orderListByOption(new ArrayList<String>(symptoms.keySet()), option);
@@ -84,17 +89,16 @@ public class SymptomToolsBox implements ISymptomToolsBox {
 	
 	/**
 	 * Method to sort the list of symptoms
+	 * @param the list of the symptom's names
+	 * @param the sort option
+	 * @return the list of symptoms sorted
 	 */
-	private List<String> orderListByOption(List<String> symptoms, OrderingOption option){		
-		if (option == OrderingOption.ASCENDING) {
-			Collections.sort(symptoms);
-		} else if (option == OrderingOption.DESCENDING) {
-			Collections.sort(symptoms, new Comparator<String>() {
-				@Override
-				public int compare(String s1, String s2) {
-					return s2.compareTo(s1);
-				}
-			});
+	private List<String> orderListByOption(List<String> symptoms, OrderingOption option){			
+		switch(option) {
+			case ASCENDING :
+				Collections.sort(symptoms);
+			case DESCENDING :
+				Collections.sort(symptoms, Collections.reverseOrder());
 		}
 		return symptoms;		
 	}
